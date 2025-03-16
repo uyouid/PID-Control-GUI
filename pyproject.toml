@@ -1,0 +1,64 @@
+[tool.poetry]
+name = "pid-control-gui"
+version = "0.1.0"
+description = ""
+authors = ["uyouid"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.40.2"
+matplotlib = "^3.9.3"
+control = "^0.10.1"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.1"
+mypy = "^1.13.0"
+taskipy = "^1.14.0"
+
+[tool.taskipy.tasks]
+start = "streamlit run src/pid_ctrl_gui.py"
+fix = "task lint && task type-check && task format"
+lint = "ruff check --fix --config=pyproject.toml src"
+type-check = "mypy src"
+format = "ruff format --config=pyproject.toml src"
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "ALL", 
+]
+ignore = [
+    "D",
+    "COM812",
+    "ISC001"
+]
+exclude = []
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+
+[tool.mypy]
+show_error_context = true
+show_column_numbers = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_return_any = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["requests.*","streamlit.*","control.*","tf_model.*"]
+ignore_missing_imports = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
