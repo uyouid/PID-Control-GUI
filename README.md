@@ -11,6 +11,11 @@ Here is the image of this app.
 pip install poetry
 ```
 
+- Update poetry config
+```bash
+poetry config virtualenvs.in-project true
+```
+
 - Install dependencies
 ```bash
 poetry install --no-root
